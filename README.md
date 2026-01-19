@@ -42,13 +42,12 @@ Siga os passos abaixo para configurar o ambiente local:
 
 ## 🧪 Testes Unitários
 ```bash
-    npm test
    npm test -- --coverage --verbose
 
+```bash
+    npm test
 ---
 ## 📂 Estrutura do Projeto
-
-De acordo com a arquitetura do sistema:
 
 ```text
 .
