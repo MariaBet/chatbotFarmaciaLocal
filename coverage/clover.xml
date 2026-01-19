@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1768828716494" clover="3.2.0">
-  <project timestamp="1768828716494" name="All files">
+<coverage generated="1768832868990" clover="3.2.0">
+  <project timestamp="1768832868991" name="All files">
     <metrics statements="353" coveredstatements="285" conditionals="54" coveredconditionals="42" methods="24" coveredmethods="16" elements="431" coveredelements="343" complexity="0" loc="353" ncloc="353" packages="1" files="2" classes="2"/>
     <file name="conversationEngine.js" path="/home/honorio/pharma-chatbot/src/conversationEngine.js">
       <metrics statements="254" coveredstatements="202" conditionals="28" coveredconditionals="19" methods="17" coveredmethods="13"/>
