@@ -41,32 +41,32 @@ Siga os passos abaixo para configurar o ambiente local:
 node index.js
 
 ## 🧪 Testes Unitários
-```bash
+
 npm test -- --coverage --verbose
 
-```bash
 npm test
+
 ---
 ## 📂 Estrutura do Projeto
 
 ```text
 .
-├── public/                # Arquivos estáticos e frontend
-│   ├── assets/            # Imagens e logotipos (ex: logofarmacia.png)
-│   └── index.html         # Interface do chat
-├── src/                   # Código fonte
-│   ├── api.js             # Integrações externas (ViaCEP)
-│   ├── conversationEngine.js # Lógica central do chatbot
-│   ├── input.js           # Tratamento de entradas do usuário
-│   ├── logger.js          # Configuração de monitoramento (Pino)
-│   ├── pricing.js         # Cálculos de valores e regras de negócio
-│   ├── store.js           # Gerenciamento de estado/dados temporários
-│   └── validators.js      # Funções de validação (CPF, Tel, CEP)
-├── tests/                 # Suíte de testes unitários
+├── public/                
+│   ├── assets/            
+│   └── index.html         
+├── src/                  
+│   ├── api.js             
+│   ├── conversationEngine.js 
+│   ├── input.js           
+│   ├── logger.js          
+│   ├── pricing.js         
+│   ├── store.js           
+│   └── validators.js      
+├── tests/                 
 │   ├── conversationEngine.test.js
 │   └── validators.test.js
-├── coverage/              # Relatórios de cobertura de testes
-├── index.js               # Ponto de entrada da aplicação
-├── jest.config.js         # Configurações do ambiente de testes
-├── package.json           # Dependências e scripts do projeto
-└── .env                   # Variáveis de ambiente
+├── coverage/             
+├── index.js               
+├── jest.config.js         
+├── package.json           
+└── .env                   
