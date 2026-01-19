@@ -36,16 +36,19 @@ Siga os passos abaixo para configurar o ambiente local:
    ```bash
    npm install
 
+---
 ## 🚀 Executar o projeto
 
 ```bash
 node index.js
 
+---
 ## 🧪 Testes Unitários
 
 ```bash
 npm test -- --coverage --verbose
 
+---
 ```bash
 npm test
 
