@@ -38,14 +38,14 @@ Siga os passos abaixo para configurar o ambiente local:
 
 ## 🚀 Executar o projeto
 ```bash
-   node index.js
+node index.js
 
 ## 🧪 Testes Unitários
 ```bash
-   npm test -- --coverage --verbose
+npm test -- --coverage --verbose
 
 ```bash
-    npm test
+npm test
 ---
 ## 📂 Estrutura do Projeto
 
