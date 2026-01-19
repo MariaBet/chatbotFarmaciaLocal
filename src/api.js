@@ -5,7 +5,7 @@ export async function getAddressByCep(cep) {
   try {
     const response = await axios.get(
       `https://viacep.com.br/ws/${cep}/json/`,
-      { timeout: 5000 }
+      { timeout: 10000 }
     );
 
     if (response.data.erro) {
