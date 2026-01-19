@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Farmácia Local</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    .chat-container {
+      max-width: 520px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      padding: 16px;
+      border-bottom: 1px solid #eee;
+      font-size: 18px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo {
+      height: 32px;
+    }
+
+    .messages {
+      padding: 16px;
+      height: 360px;
+      overflow-y: auto;
+      background: #fafafa;
+    }
+
+    .message {
+      max-width: 80%;
+      margin-bottom: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      white-space: pre-line;
+    }
+
+    .bot {
+      background: #e3f2fd;
+      color: #0d47a1;
+      align-self: flex-start;
+    }
+
+    .user {
+      background: #c8e6c9;
+      color: #1b5e20;
+      align-self: flex-end;
+    }
+
+    .input-area {
+      display: flex;
+      border-top: 1px solid #eee;
+      padding: 12px;
+      gap: 8px;
+    }
+
+    .input-area input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .input-area button {
+      padding: 10px 16px;
+      border-radius: 6px;
+      border: none;
+      background: #1976d2;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .input-area button:disabled,
+    .input-area input:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="chat-container">
+  <div class="header">
+    <img src="/assets/logofarmacia.png" class="logo" />
+    <span>Farmácia Local</span>
+  </div>
+
+  <div id="messages" class="messages"></div>
+
+  <div class="input-area">
+    <input id="input" placeholder="Digite sua mensagem..." disabled />
+    <button id="sendBtn" onclick="send()" disabled>Enviar</button>
+  </div>
+</div>
+
+<script>
+  let sessionId = null;
+
+  const inputEl = document.getElementById('input');
+  const buttonEl = document.getElementById('sendBtn');
+  const messagesEl = document.getElementById('messages');
+
+  function addMessage(text, type) {
+    const div = document.createElement('div');
+    div.className = `message ${type}`;
+    div.innerText = text;
+    messagesEl.appendChild(div);
+    div.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function enableInput() {
+    inputEl.disabled = false;
+    buttonEl.disabled = false;
+    inputEl.focus();
+  }
+
+  function disableInput() {
+    inputEl.disabled = true;
+    buttonEl.disabled = true;
+  }
+
+  async function continueConversation() {
+    disableInput();
+
+    const res = await fetch('/conversation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessionId, message: '' })
+    });
+
+    const data = await res.json();
+    addMessage(data.reply, 'bot');
+
+    if (data.reply.includes('Consultando endereço')) {
+      continueConversation();
+    } else {
+      enableInput();
+    }
+  }
+
+  async function start() {
+    const res = await fetch('/start', { method: 'POST' });
+    const data = await res.json();
+
+    sessionId = data.sessionId;
+    addMessage(data.message, 'bot');
+
+    continueConversation();
+  }
+
+  async function send() {
+    const message = inputEl.value.trim();
+    if (!message) return;
+
+    addMessage(message, 'user');
+    inputEl.value = '';
+
+    disableInput();
+
+    const res = await fetch('/conversation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessionId, message })
+    });
+
+    const data = await res.json();
+    addMessage(data.reply, 'bot');
+
+    if (data.reply.includes('Consultando endereço')) {
+      continueConversation();
+    } else {
+      enableInput();
+    }
+  }
+
+  inputEl.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      send();
+    }
+  });
+
+  start();
+</script>
+
+</body>
+</html>
