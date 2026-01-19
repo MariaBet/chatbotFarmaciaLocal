@@ -1,6 +1,6 @@
 # Chatbot Farmácia Local
 
-Um Chatbot para compra de medicamento e pagamento na entrega, com validações de dados, consulta de CEP via API externa.
+Um Chatbot para compra de medicamentos e pagamento na entrega, com validações de dados, consulta de CEP via API externa.
 
 ---
 
@@ -29,6 +29,22 @@ Um Chatbot para compra de medicamento e pagamento na entrega, com validações d
 - Jest (testes unitários)
 
 ---
+## Pré-requisitos
+
+Node.js versão 22 ou superior
+
+## Instalação
+
+npm install
+
+## Executar o projeto
+
+node index.js
+
+## Executar os tests unitários
+
+npm test -- --coverage --verbose
+---
 
 ## Estrutura do Projeto
 
@@ -48,21 +64,5 @@ Um Chatbot para compra de medicamento e pagamento na entrega, com validações d
 ├── jest.config.js
 ├── package.json
 └── README.md
-
-## Pré-requisitos
-
-Node.js versão 22 ou superior
-
-## Instalação
-
-npm install
-
-## Executar o projeto
-
-node index.js
-
-## Executar os tests unitários
-
-npm test -- --coverage --verbose
 
 
