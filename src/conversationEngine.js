@@ -1,6 +1,8 @@
 import { getAddressByCep } from './api.js';
 import { logger } from './logger.js';
 import { validators } from './validators.js';
+import { getMedicinePrice } from './pricing.js';
+
 
 export const conversationPharma = {
   INIT: 'INIT',
@@ -67,9 +69,18 @@ async function handleInit(session) {
 }
 
 function handleAskMedicine(session, input) {
-  session.order.medicine = input.trim();
+  const medicine = input.trim();
+  if (!medicine) return 'Por favor, digite o nome do medicamento.';
+
+  session.order.medicine = medicine;
+  session.order.price = getMedicinePrice(medicine);
+
   session.conversation = conversationPharma.ASK_NAME;
-  return 'Digite seu nome completo';
+  return `Medicamento: ${medicine}
+
+Valor: R$ ${session.order.price.toFixed(2)}
+
+Agora Digite seu nome completo`;
 }
 
 function handleAskName(session, input) {
@@ -165,7 +176,10 @@ function handleAskNumber(session, input) {
 }
 
 function handleAskDistrict(session, input) {
-  session.order.address.bairro = input.trim();
+  const district = input.trim();
+  if (!district) return 'Por favor, digite o nome do bairro';
+
+  session.order.address.bairro = district;
   session.conversation = conversationPharma.CONFIRM_ADDRESS;
   return buildAddressConfirmation(session);
 }
@@ -189,12 +203,15 @@ async function handleConfirmAddress(session, input) {
   session.order.createdAt = new Date().toISOString();
 
   await delay(2000);
+
+  const { order } = session;
   return `✅ Pedido #${orderId} confirmado com sucesso!
 
 👤 Cliente: ${session.order.name}
 🪪 CPF: ${session.order.cpf}
 📞 Telefone: ${formatPhone(session.order.phone)}
 💊 Medicamento: ${session.order.medicine}
+💰 Valor do medicamento: R$ ${order.price.toFixed(2)}
 
 📍 Endereço:
 CEP: ${session.order.cep}
